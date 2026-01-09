@@ -719,29 +719,63 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
                     <input type="text" id="edit-folder-name" placeholder="Enter folder name...">
                 </div>
 
-                <div style="border-top: 1px solid #2a2a2a; margin: 32px 0; padding-top: 32px;">
-                    <h3 style="margin-bottom: 20px; font-size: 1.25rem;">Add New Category</h3>
-                    
-                    <div class="input-group">
-                        <label>Category Name</label>
-                        <input type="text" id="edit-folder-deck-title" placeholder="Enter category name...">
+                <div style="border: 1px solid #2a2a2a; border-radius: 6px; margin: 24px 0;">
+                    <div style="display: flex; border-bottom: 1px solid #2a2a2a;">
+                        <button class="import-tab active" onclick="switchEditFolderTab('manual')" id="edit-manual-tab" style="flex: 1; padding: 12px; background: transparent; border: none; color: #8a8a8a; cursor: pointer; border-radius: 6px 6px 0 0;">Manual Entry</button>
+                        <button class="import-tab" onclick="switchEditFolderTab('bulk')" id="edit-bulk-tab" style="flex: 1; padding: 12px; background: transparent; border: none; color: #8a8a8a; cursor: pointer; border-radius: 6px 6px 0 0;">Bulk Import</button>
                     </div>
 
-                    <div class="input-group">
-                        <label>Term / Question</label>
-                        <input type="text" id="edit-folder-card-term" placeholder="Enter term or question...">
+                    <div id="edit-manual-import" class="import-content" style="padding: 24px;">
+                        <h3 style="margin-bottom: 20px; font-size: 1.25rem;">Add New Category</h3>
+                        
+                        <div class="input-group">
+                            <label>Category Name</label>
+                            <input type="text" id="edit-folder-deck-title" placeholder="Enter category name...">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Term / Question</label>
+                            <input type="text" id="edit-folder-card-term" placeholder="Enter term or question...">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Definition / Answer</label>
+                            <textarea id="edit-folder-card-definition" placeholder="Enter definition or answer..."></textarea>
+                        </div>
+
+                        <button class="primary-btn" onclick="addFlashcardToNewCategory()">Add Flashcard</button>
+
+                        <div id="edit-folder-new-category-cards" class="flashcard-list"></div>
+
+                        <button class="secondary-btn" onclick="saveNewCategoryToEditFolder()" style="margin-top: 16px;">Save Category to Folder</button>
                     </div>
 
-                    <div class="input-group">
-                        <label>Definition / Answer</label>
-                        <textarea id="edit-folder-card-definition" placeholder="Enter definition or answer..."></textarea>
+                    <div id="edit-bulk-import" class="import-content" style="padding: 24px; display: none;">
+                        <h3 style="margin-bottom: 20px; font-size: 1.25rem;">Bulk Import Categories</h3>
+                        
+                        <div style="background: #141414; padding: 16px; border-radius: 6px; margin-bottom: 16px; border: 1px solid #2a2a2a;">
+                            <div style="color: #d4af37; font-size: 0.9rem; font-weight: 500; margin-bottom: 8px;">Format Guide:</div>
+                            <div style="color: #8a8a8a; font-size: 0.85rem; line-height: 1.6;">
+                                # Category Name<br>
+                                term 1 | definition 1<br>
+                                term 2 | definition 2<br>
+                                <br>
+                                # Another Category<br>
+                                term 1 | definition 1<br>
+                                <br>
+                                <span style="color: #5a5a5a;">• Use # to start a new category</span><br>
+                                <span style="color: #5a5a5a;">• Use | to separate term and definition</span><br>
+                                <span style="color: #5a5a5a;">• One flashcard per line</span>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Paste Your Flashcards</label>
+                            <textarea id="edit-folder-bulk-text" placeholder="# Cell Structure&#10;Mitochondria | Powerhouse of the cell&#10;Nucleus | Contains genetic material&#10;&#10;# Photosynthesis&#10;Chlorophyll | Green pigment that captures light&#10;Stomata | Pores for gas exchange" style="min-height: 300px; font-family: 'Courier New', monospace;"></textarea>
+                        </div>
+
+                        <button class="primary-btn" onclick="processEditFolderBulkImport()">Import Categories</button>
                     </div>
-
-                    <button class="primary-btn" onclick="addFlashcardToNewCategory()">Add Flashcard</button>
-
-                    <div id="edit-folder-new-category-cards" class="flashcard-list"></div>
-
-                    <button class="secondary-btn" onclick="saveNewCategoryToEditFolder()" style="margin-top: 16px;">Save Category to Folder</button>
                 </div>
 
                 <div id="edit-folder-categories-list" style="margin-top: 32px;"></div>
@@ -1539,6 +1573,25 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
             }
         }
 
+        function switchEditFolderTab(tab) {
+            const manualTab = document.getElementById('edit-manual-tab');
+            const bulkTab = document.getElementById('edit-bulk-tab');
+            const manualContent = document.getElementById('edit-manual-import');
+            const bulkContent = document.getElementById('edit-bulk-import');
+
+            if (tab === 'manual') {
+                manualTab.classList.add('active');
+                bulkTab.classList.remove('active');
+                manualContent.style.display = 'block';
+                bulkContent.style.display = 'none';
+            } else {
+                bulkTab.classList.add('active');
+                manualTab.classList.remove('active');
+                bulkContent.style.display = 'block';
+                manualContent.style.display = 'none';
+            }
+        }
+
         function processBulkImport() {
             const text = document.getElementById('bulk-import-text').value.trim();
 
@@ -1597,6 +1650,72 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 
                 document.getElementById('bulk-import-text').value = '';
                 renderFolderDecksList();
+                alert(`Successfully imported ${categoriesAdded} ${categoriesAdded === 1 ? 'category' : 'categories'}!`);
+
+            } catch (error) {
+                alert('Error processing bulk import. Please check your format and try again.');
+                console.error(error);
+            }
+        }
+
+        function processEditFolderBulkImport() {
+            const text = document.getElementById('edit-folder-bulk-text').value.trim();
+
+            if (!text) {
+                alert('Please paste your flashcard data');
+                return;
+            }
+
+            try {
+                const lines = text.split('\n');
+                let currentCategory = null;
+                let categoriesAdded = 0;
+
+                for (let line of lines) {
+                    line = line.trim();
+                    
+                    if (!line) continue;
+
+                    if (line.startsWith('#')) {
+                        if (currentCategory && currentCategory.cards.length > 0) {
+                            editFolderState.folder.decks.push(currentCategory);
+                            categoriesAdded++;
+                        }
+                        
+                        currentCategory = {
+                            title: line.substring(1).trim(),
+                            cards: []
+                        };
+                    } else if (line.includes('|')) {
+                        if (!currentCategory) {
+                            alert('Error: Found flashcard before category declaration. Please start with # Category Name');
+                            return;
+                        }
+
+                        const parts = line.split('|');
+                        if (parts.length >= 2) {
+                            const term = parts[0].trim();
+                            const definition = parts.slice(1).join('|').trim();
+                            
+                            if (term && definition) {
+                                currentCategory.cards.push({ term, definition });
+                            }
+                        }
+                    }
+                }
+
+                if (currentCategory && currentCategory.cards.length > 0) {
+                    editFolderState.folder.decks.push(currentCategory);
+                    categoriesAdded++;
+                }
+
+                if (categoriesAdded === 0) {
+                    alert('No valid categories found. Please check your format:\n\n# Category Name\nterm | definition');
+                    return;
+                }
+
+                document.getElementById('edit-folder-bulk-text').value = '';
+                renderEditFolderCategories();
                 alert(`Successfully imported ${categoriesAdded} ${categoriesAdded === 1 ? 'category' : 'categories'}!`);
 
             } catch (error) {
