@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alvo - Flashcard Study App</title>
+    <script>
+var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",n="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$",e={};function t(r,o){if(!e[r]){e[r]={};for(var n=0;n<r.length;n++)e[r][r.charAt(n)]=n}return e[r][o]}var i={compressToBase64:function(r){if(null==r)return"";var n=i._compress(r,6,function(r){return o.charAt(r)});switch(n.length%4){default:case 0:return n;case 1:return n+"===";case 2:return n+"==";case 3:return n+"="}},decompressFromBase64:function(r){return null==r?"":""==r?null:i._decompress(r.length,32,function(n){return t(o,r.charAt(n))})},compressToUTF16:function(o){return null==o?"":i._compress(o,15,function(o){return r(o+32)})+" "},decompressFromUTF16:function(r){return null==r?"":""==r?null:i._decompress(r.length,16384,function(o){return r.charCodeAt(o)-32})},compressToUint8Array:function(r){for(var o=i.compress(r),n=new Uint8Array(2*o.length),e=0,t=o.length;e<t;e++){var s=o.charCodeAt(e);n[2*e]=s>>>8,n[2*e+1]=s%256}return n},decompressFromUint8Array:function(o){if(null==o)return i.decompress(o);for(var n=new Array(o.length/2),e=0,t=n.length;e<t;e++)n[e]=256*o[2*e]+o[2*e+1];var s=[];return n.forEach(function(o){s.push(r(o))}),i.decompress(s.join(""))},compressToEncodedURIComponent:function(r){return null==r?"":i._compress(r,6,function(r){return n.charAt(r)})},decompressFromEncodedURIComponent:function(r){return null==r?"":""==r?null:(r=r.replace(/ /g,"+"),i._decompress(r.length,32,function(o){return t(n,r.charAt(o))}))},compress:function(o){return i._compress(o,16,function(o){return r(o)})},_compress:function(r,o,n){if(null==r)return"";var e,t,i,s={},u={},a="",p="",c="",l=2,f=3,h=2,d=[],m=0,v=0;for(i=0;i<r.length;i+=1)if(a=r.charAt(i),Object.prototype.hasOwnProperty.call(s,a)||(s[a]=f++,u[a]=!0),p=c+a,Object.prototype.hasOwnProperty.call(s,p))c=p;else{if(Object.prototype.hasOwnProperty.call(u,c)){if(c.charCodeAt(0)<256){for(e=0;e<h;e++)m<<=1,v==o-1?(v=0,d.push(n(m)),m=0):v++;for(t=c.charCodeAt(0),e=0;e<8;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}else{for(t=1,e=0;e<h;e++)m=m<<1|t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t=0;for(t=c.charCodeAt(0),e=0;e<16;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}0==--l&&(l=Math.pow(2,h),h++),delete u[c]}else for(t=s[c],e=0;e<h;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;0==--l&&(l=Math.pow(2,h),h++),s[p]=f++,c=String(a)}if(""!==c){if(Object.prototype.hasOwnProperty.call(u,c)){if(c.charCodeAt(0)<256){for(e=0;e<h;e++)m<<=1,v==o-1?(v=0,d.push(n(m)),m=0):v++;for(t=c.charCodeAt(0),e=0;e<8;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}else{for(t=1,e=0;e<h;e++)m=m<<1|t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t=0;for(t=c.charCodeAt(0),e=0;e<16;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}0==--l&&(l=Math.pow(2,h),h++),delete u[c]}else for(t=s[c],e=0;e<h;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;0==--l&&(l=Math.pow(2,h),h++)}for(t=2,e=0;e<h;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;for(;;){if(m<<=1,v==o-1){d.push(n(m));break}v++}return d.join("")},decompress:function(r){return null==r?"":""==r?null:i._decompress(r.length,32768,function(o){return r.charCodeAt(o)})},_decompress:function(o,n,e){var t,i,s,u,a,p,c,l=[],f=4,h=4,d=3,m="",v=[],g={val:e(0),position:n,index:1};for(t=0;t<3;t+=1)l[t]=t;for(s=0,a=Math.pow(2,2),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;switch(s){case 0:for(s=0,a=Math.pow(2,8),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;c=r(s);break;case 1:for(s=0,a=Math.pow(2,16),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;c=r(s);break;case 2:return""}for(l[3]=c,i=c,v.push(c);;){if(g.index>o)return"";for(s=0,a=Math.pow(2,d),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;switch(c=s){case 0:for(s=0,a=Math.pow(2,8),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;l[h++]=r(s),c=h-1,f--;break;case 1:for(s=0,a=Math.pow(2,16),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;l[h++]=r(s),c=h-1,f--;break;case 2:return v.join("")}if(0==f&&(f=Math.pow(2,d),d++),l[c])m=l[c];else{if(c!==h)return null;m=i+i.charAt(0)}v.push(m),l[h++]=i+m.charAt(0),i=m,0==--f&&(f=Math.pow(2,d),d++)}}};return i}();"function"==typeof define&&define.amd?define(function(){return LZString}):"undefined"!=typeof module&&null!=module&&(module.exports=LZString);
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+            background: #0d0d0d;
+            color: #e8e8e8;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 0 40px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 600;
+            color: #d4af37;
+            letter-spacing: 8px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #8a8a8a;
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2px;
+            margin: 0 0 50px;
+            background: #1a1a1a;
+            border-radius: 6px;
+            padding: 4px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            background: transparent;
+            border: none;
+            color: #8a8a8a;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            text-transform: none;
+            letter-spacing: 0.3px;
+            position: relative;
+        }
+
+        .btn:hover {
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .btn.active {
+            background: #d4af37;
+            color: #000;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 40px;
+            margin: 20px 0;
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(212, 175, 55, 0.2);
+        }
+
+        .input-group {
+            margin: 24px 0;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #e8e8e8;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            color: #e8e8e8;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+            background: #141414;
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .flashcard-list {
+            margin: 32px 0;
+        }
+
+        .flashcard-item {
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 12px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .flashcard-item:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .flashcard-content {
+            flex: 1;
+        }
+
+        .flashcard-term {
+            font-weight: 500;
+            color: #e8e8e8;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .flashcard-definition {
+            color: #8a8a8a;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .delete-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid #3a3a3a;
+            color: #8a8a8a;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .delete-btn:hover {
+            background: #1a1a1a;
+            border-color: #d4af37;
+            color: #d4af37;
+        }
+
+        .deck-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .deck-card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 28px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .deck-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .deck-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #e8e8e8;
+            margin-bottom: 8px;
+        }
+
+        .deck-count {
+            color: #8a8a8a;
+            font-size: 0.85rem;
+            font-weight: 400;
+        }
+
+        .share-code-display {
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            padding: 28px;
+            text-align: center;
+            margin: 32px 0;
+        }
+
+        .share-code-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #d4af37;
+            letter-spacing: 1px;
+            margin: 16px 0;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+        }
+
+        .copy-btn {
+            padding: 10px 24px;
+            background: #d4af37;
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 12px;
+            font-size: 0.9rem;
+        }
+
+        .copy-btn:hover {
+            background: #c29d2f;
+        }
+
+        .study-card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 80px 60px;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .study-card:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .study-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            backface-visibility: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        .card-text {
+            font-size: 1.75rem;
+            color: #e8e8e8;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .study-controls {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #2a2a2a;
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 24px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #d4af37;
+            transition: width 0.3s ease;
+        }
+
+        .quiz-option {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            padding: 20px 24px;
+            margin: 12px 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-option:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            background: #1f1f1f;
+        }
+
+        .quiz-option.correct {
+            background: rgba(34, 139, 34, 0.15);
+            border-color: #228b22;
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(178, 34, 34, 0.15);
+            border-color: #b22222;
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #e8e8e8;
+            margin: 50px 0;
+            font-weight: 300;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .close-modal {
+            float: right;
+            font-size: 1.5rem;
+            color: #8a8a8a;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close-modal:hover {
+            color: #d4af37;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #5a5a5a;
+            font-size: 1rem;
+        }
+
+        .deck-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .small-btn {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+
+        .primary-btn {
+            background: #d4af37;
+            color: #000;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .primary-btn:hover {
+            background: #c29d2f;
+        }
+
+        .secondary-btn {
+            background: transparent;
+            color: #8a8a8a;
+            border: 1px solid #3a3a3a;
+            padding: 12px 28px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .secondary-btn:hover {
+            border-color: #d4af37;
+            color: #d4af37;
+        }
+
+        h2 {
+            font-weight: 500;
+            font-size: 1.75rem;
+            color: #e8e8e8;
+        }
+
+        h3 {
+            font-weight: 500;
+            color: #e8e8e8;
+        }
+
+        p {
+            color: #a8a8a8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">ALVO</div>
+            <div class="subtitle">Master Your Knowledge</div>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="btn active" onclick="showSection('home')">Home</button>
+            <button class="btn" onclick="showSection('create')">Create Folder</button>
+            <button class="btn" onclick="showSection('import')">Import Folder</button>
+            <button class="btn" onclick="showSection('my-folders')">My Folders</button>
+        </div>
+
+        <div id="home-section" class="section active">
+            <div class="card">
+                <h2 style="margin-bottom: 16px;">Welcome to Alvo</h2>
+                <p style="line-height: 1.8; font-size: 1rem; margin-bottom: 16px;">
+                    A professional flashcard platform for organized learning and knowledge sharing.
+                </p>
+                <p style="line-height: 1.8; font-size: 1rem; color: #8a8a8a;">
+                    <strong style="color: #d4af37;">Structure:</strong> Create folders (e.g., "AP Biology") containing multiple categories (e.g., "Cell Structure", "Photosynthesis"). 
+                    Each category contains flashcards you can study. Share entire folders via a single encoded share code.
+                </p>
+            </div>
+        </div>
+
+        <div id="create-section" class="section">
+            <div class="card">
+                <h2 style="margin-bottom: 24px;">Create New Folder</h2>
+                
+                <div class="input-group">
+                    <label>Folder Name</label>
+                    <input type="text" id="folder-name" placeholder="e.g., AP Biology">
+                </div>
+
+                <div style="border-top: 1px solid #2a2a2a; margin: 32px 0; padding-top: 32px;">
+                    <h3 style="margin-bottom: 20px; font-size: 1.25rem;">Add Categories (Decks) to Folder</h3>
+                    
+                    <div class="input-group">
+                        <label>Category Name</label>
+                        <input type="text" id="deck-title" placeholder="e.g., Cell Structure, Photosynthesis, etc.">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Term / Question</label>
+                        <input type="text" id="card-term" placeholder="Enter term or question...">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Definition / Answer</label>
+                        <textarea id="card-definition" placeholder="Enter definition or answer..."></textarea>
+                    </div>
+
+                    <button class="primary-btn" onclick="addFlashcard()">Add Flashcard to Category</button>
+
+                    <div id="flashcard-list" class="flashcard-list"></div>
+
+                    <button class="secondary-btn" onclick="saveDeckToFolder()" style="margin-top: 16px;">Save Category to Folder</button>
+                </div>
+
+                <div id="folder-decks-list" style="margin-top: 32px;"></div>
+
+                <div style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; border-top: 1px solid #2a2a2a; padding-top: 32px;">
+                    <button class="primary-btn" onclick="saveFolder()">Save Complete Folder</button>
+                    <button class="secondary-btn" onclick="generateFolderCode()">Generate Folder Share Code</button>
+                </div>
+
+                <div id="share-code-container"></div>
+            </div>
+        </div>
+
+        <div id="import-section" class="section">
+            <div class="card">
+                <h2 style="margin-bottom: 24px;">Import Folder</h2>
+                
+                <div class="input-group">
+                    <label>Folder Share Code</label>
+                    <input type="text" id="import-code" placeholder="Paste folder share code here...">
+                </div>
+
+                <button class="primary-btn" onclick="importFolder()">Import Folder</button>
+            </div>
+        </div>
+
+        <div id="my-folders-section" class="section">
+            <div class="card">
+                <h2 style="margin-bottom: 24px;">My Folders</h2>
+                <div id="folder-grid" class="deck-grid"></div>
+            </div>
+        </div>
+
+        <div id="folder-view-section" class="section">
+            <div class="card">
+                <button class="secondary-btn" onclick="backToFolders()" style="margin-bottom: 20px;">← Back to Folders</button>
+                <h2 id="folder-view-title" style="margin-bottom: 24px;"></h2>
+                <div id="folder-decks-grid" class="deck-grid"></div>
+            </div>
+        </div>
+
+        <div id="edit-category-section" class="section">
+            <div class="card">
+                <button class="secondary-btn" onclick="backToFolderViewFromEdit()" style="margin-bottom: 20px;">← Back to Folder</button>
+                <h2 id="edit-category-title" style="margin-bottom: 24px;">Edit Category</h2>
+
+                <div class="input-group">
+                    <label>Category Name</label>
+                    <input type="text" id="edit-deck-title" placeholder="Enter category name...">
+                </div>
+
+                <div style="border-top: 1px solid #2a2a2a; margin: 32px 0; padding-top: 32px;">
+                    <h3 style="margin-bottom: 20px; font-size: 1.25rem;">Add New Flashcards</h3>
+                    
+                    <div class="input-group">
+                        <label>Term / Question</label>
+                        <input type="text" id="edit-card-term" placeholder="Enter term or question...">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Definition / Answer</label>
+                        <textarea id="edit-card-definition" placeholder="Enter definition or answer..."></textarea>
+                    </div>
+
+                    <button class="primary-btn" onclick="addFlashcardToEdit()">Add Flashcard</button>
+                </div>
+
+                <div id="edit-flashcard-list" class="flashcard-list"></div>
+
+                <div style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; border-top: 1px solid #2a2a2a; padding-top: 32px;">
+                    <button class="primary-btn" onclick="saveEditedCategory()">Save Changes</button>
+                    <button class="secondary-btn" onclick="backToFolderViewFromEdit()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="edit-folder-section" class="section">
+            <div class="card">
+                <button class="secondary-btn" onclick="backToFoldersFromEditFolder()" style="margin-bottom: 20px;">← Back to Folders</button>
+                <h2 style="margin-bottom: 24px;">Edit Folder</h2>
+
+                <div class="input-group">
+                    <label>Folder Name</label>
+                    <input type="text" id="edit-folder-name" placeholder="Enter folder name...">
+                </div>
+
+                <div style="border-top: 1px solid #2a2a2a; margin: 32px 0; padding-top: 32px;">
+                    <h3 style="margin-bottom: 20px; font-size: 1.25rem;">Add New Category</h3>
+                    
+                    <div class="input-group">
+                        <label>Category Name</label>
+                        <input type="text" id="edit-folder-deck-title" placeholder="Enter category name...">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Term / Question</label>
+                        <input type="text" id="edit-folder-card-term" placeholder="Enter term or question...">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Definition / Answer</label>
+                        <textarea id="edit-folder-card-definition" placeholder="Enter definition or answer..."></textarea>
+                    </div>
+
+                    <button class="primary-btn" onclick="addFlashcardToNewCategory()">Add Flashcard</button>
+
+                    <div id="edit-folder-new-category-cards" class="flashcard-list"></div>
+
+                    <button class="secondary-btn" onclick="saveNewCategoryToEditFolder()" style="margin-top: 16px;">Save Category to Folder</button>
+                </div>
+
+                <div id="edit-folder-categories-list" style="margin-top: 32px;"></div>
+
+                <div style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; border-top: 1px solid #2a2a2a; padding-top: 32px;">
+                    <button class="primary-btn" onclick="saveEditedFolder()">Save Folder Changes</button>
+                    <button class="secondary-btn" onclick="backToFoldersFromEditFolder()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="study-section" class="section">
+            <div class="card">
+                <button class="secondary-btn" onclick="backToFolderView()" style="margin-bottom: 20px;">← Back to Folder</button>
+                <h2 id="study-deck-title" style="margin-bottom: 24px;"></h2>
+                
+                <div class="progress-bar">
+                    <div id="study-progress" class="progress-fill" style="width: 0%"></div>
+                </div>
+
+                <div id="study-card" class="study-card" onclick="flipCard()">
+                    <div class="card-face">
+                        <div id="card-front-text" class="card-text"></div>
+                    </div>
+                    <div class="card-face card-back">
+                        <div id="card-back-text" class="card-text"></div>
+                    </div>
+                </div>
+
+                <div class="study-controls">
+                    <button class="secondary-btn" onclick="previousCard()">← Previous</button>
+                    <button class="secondary-btn" onclick="shuffleCards()">Shuffle</button>
+                    <button class="secondary-btn" onclick="nextCard()">Next →</button>
+                    <button class="primary-btn" onclick="backToFolderView()">Back to Folder</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="quiz-section" class="section">
+            <div class="card">
+                <button class="secondary-btn" onclick="backToFolderView()" style="margin-bottom: 20px;">← Back to Folder</button>
+                <h2 id="quiz-deck-title" style="margin-bottom: 24px;"></h2>
+                
+                <div class="progress-bar">
+                    <div id="quiz-progress" class="progress-fill" style="width: 0%"></div>
+                </div>
+
+                <div id="quiz-container"></div>
+
+                <div id="quiz-result" style="display: none;">
+                    <div class="score-display" id="final-score"></div>
+                    <div style="text-align: center;">
+                        <button class="secondary-btn" onclick="retakeQuiz()">Retake Quiz</button>
+                        <button class="primary-btn" onclick="backToFolderView()">Back to Folder</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentDeck = {
+            title: '',
+            cards: []
+        };
+
+        let currentFolder = {
+            name: '',
+            decks: []
+        };
+
+        let editState = {
+            folderIndex: -1,
+            deckIndex: -1,
+            deck: null
+        };
+
+        let editFolderState = {
+            folderIndex: -1,
+            folder: null,
+            newCategoryDeck: { title: '', cards: [] }
+        };
+
+        let folders = JSON.parse(localStorage.getItem('alvoFolders')) || [];
+        let folderCodes = JSON.parse(localStorage.getItem('alvoFolderCodes')) || {};
+        let studyState = {
+            folderIndex: -1,
+            deckIndex: -1,
+            currentCard: 0,
+            flipped: false,
+            cards: []
+        };
+        let quizState = {
+            folderIndex: -1,
+            deckIndex: -1,
+            currentQuestion: 0,
+            score: 0,
+            answers: []
+        };
+
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-buttons .btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(section + '-section').classList.add('active');
+            event.target.classList.add('active');
+
+            if (section === 'my-folders') {
+                renderFolders();
+            }
+        }
+
+        function addFlashcard() {
+            const term = document.getElementById('card-term').value.trim();
+            const definition = document.getElementById('card-definition').value.trim();
+
+            if (!term || !definition) {
+                alert('Please fill in both term and definition');
+                return;
+            }
+
+            currentDeck.cards.push({ term, definition });
+            document.getElementById('card-term').value = '';
+            document.getElementById('card-definition').value = '';
+            
+            renderFlashcardList();
+        }
+
+        function renderFlashcardList() {
+            const list = document.getElementById('flashcard-list');
+            
+            if (currentDeck.cards.length === 0) {
+                list.innerHTML = '<div class="empty-state">No flashcards added yet. Create your first card above.</div>';
+                return;
+            }
+
+            list.innerHTML = currentDeck.cards.map((card, index) => `
+                <div class="flashcard-item">
+                    <div class="flashcard-content">
+                        <div class="flashcard-term">${card.term}</div>
+                        <div class="flashcard-definition">${card.definition}</div>
+                    </div>
+                    <button class="delete-btn" onclick="deleteFlashcard(${index})">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        function deleteFlashcard(index) {
+            currentDeck.cards.splice(index, 1);
+            renderFlashcardList();
+        }
+
+        function saveDeckToFolder() {
+            const title = document.getElementById('deck-title').value.trim();
+
+            if (!title) {
+                alert('Please enter a category name');
+                return;
+            }
+
+            if (currentDeck.cards.length === 0) {
+                alert('Please add at least one flashcard to this category');
+                return;
+            }
+
+            currentDeck.title = title;
+            currentFolder.decks.push({ ...currentDeck });
+            
+            currentDeck = { title: '', cards: [] };
+            document.getElementById('deck-title').value = '';
+            renderFlashcardList();
+            renderFolderDecksList();
+            
+            alert('Category added to folder!');
+        }
+
+        function renderFolderDecksList() {
+            const container = document.getElementById('folder-decks-list');
+            
+            if (currentFolder.decks.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            container.innerHTML = `
+                <div style="border-top: 1px solid #2a2a2a; padding-top: 24px;">
+                    <h3 style="margin-bottom: 16px; font-size: 1.25rem;">Categories in This Folder (${currentFolder.decks.length})</h3>
+                    ${currentFolder.decks.map((deck, index) => `
+                        <div class="flashcard-item">
+                            <div class="flashcard-content">
+                                <div class="flashcard-term">${deck.title}</div>
+                                <div class="flashcard-definition">${deck.cards.length} flashcards</div>
+                            </div>
+                            <button class="delete-btn" onclick="removeDeckFromFolder(${index})">Remove</button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function removeDeckFromFolder(index) {
+            currentFolder.decks.splice(index, 1);
+            renderFolderDecksList();
+        }
+
+        function saveFolder() {
+            const folderName = document.getElementById('folder-name').value.trim();
+
+            if (!folderName) {
+                alert('Please enter a folder name');
+                return;
+            }
+
+            if (currentFolder.decks.length === 0) {
+                alert('Please add at least one category to the folder');
+                return;
+            }
+
+            currentFolder.name = folderName;
+            const folderCopy = { ...currentFolder, decks: [...currentFolder.decks] };
+            folders.push(folderCopy);
+            localStorage.setItem('alvoFolders', JSON.stringify(folders));
+
+            const folderData = JSON.stringify(folderCopy);
+            const encoded = LZString.compressToEncodedURIComponent(folderData);
+            folderCodes[folderName] = encoded;
+            localStorage.setItem('alvoFolderCodes', JSON.stringify(folderCodes));
+
+            alert(`Folder "${folderName}" saved successfully with ${currentFolder.decks.length} categories!`);
+            
+            document.getElementById('share-code-container').innerHTML = `
+                <div class="share-code-display">
+                    <div style="color: #8a8a8a; font-size: 0.85rem; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Folder Share Code (Auto-Generated)</div>
+                    <div class="share-code-text">${encoded}</div>
+                    <button class="copy-btn" onclick="copyShareCode('${encoded}')">Copy Code</button>
+                </div>
+            `;
+
+            currentFolder = { name: '', decks: [] };
+            document.getElementById('folder-name').value = '';
+            renderFolderDecksList();
+        }
+
+        function generateFolderCode() {
+            const folderName = document.getElementById('folder-name').value.trim();
+
+            if (!folderName) {
+                alert('Please enter a folder name');
+                return;
+            }
+
+            if (currentFolder.decks.length === 0) {
+                alert('Please add at least one category with flashcards to the folder');
+                return;
+            }
+
+            currentFolder.name = folderName;
+            const folderData = JSON.stringify(currentFolder);
+            const encoded = LZString.compressToEncodedURIComponent(folderData);
+
+            folderCodes[folderName] = encoded;
+            localStorage.setItem('alvoFolderCodes', JSON.stringify(folderCodes));
+
+            document.getElementById('share-code-container').innerHTML = `
+                <div class="share-code-display">
+                    <div style="color: #8a8a8a; font-size: 0.85rem; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Folder Share Code</div>
+                    <div class="share-code-text">${encoded}</div>
+                    <button class="copy-btn" onclick="copyShareCode('${encoded}')">Copy Code</button>
+                </div>
+            `;
+        }
+
+        function copyShareCode(code) {
+            navigator.clipboard.writeText(code).then(() => {
+                alert('Share code copied to clipboard!');
+            });
+        }
+
+        function importFolder() {
+            const code = document.getElementById('import-code').value.trim();
+
+            if (!code) {
+                alert('Please enter a folder share code');
+                return;
+            }
+
+            try {
+                const decoded = LZString.decompressFromEncodedURIComponent(code);
+                const folder = JSON.parse(decoded);
+
+                if (!folder.name || !Array.isArray(folder.decks) || folder.decks.length === 0) {
+                    throw new Error('Invalid folder format');
+                }
+
+                folders.push(folder);
+                localStorage.setItem('alvoFolders', JSON.stringify(folders));
+
+                folderCodes[folder.name] = code;
+                localStorage.setItem('alvoFolderCodes', JSON.stringify(folderCodes));
+
+                alert(`Folder "${folder.name}" imported successfully!`);
+                document.getElementById('import-code').value = '';
+                showSection('my-folders');
+            } catch (error) {
+                alert('Invalid share code. Please check and try again.');
+            }
+        }
+
+        function renderFolders() {
+            const grid = document.getElementById('folder-grid');
+
+            if (folders.length === 0) {
+                grid.innerHTML = '<div class="empty-state">No folders available. Create or import a folder to begin.</div>';
+                return;
+            }
+
+            grid.innerHTML = folders.map((folder, index) => {
+                const shareCode = folderCodes[folder.name] || '';
+                const totalCards = folder.decks.reduce((sum, deck) => sum + deck.cards.length, 0);
+                return `
+                <div class="deck-card" onclick="viewFolder(${index})">
+                    <div class="deck-title">${folder.name}</div>
+                    <div class="deck-count">${folder.decks.length} categories • ${totalCards} total flashcards</div>
+                    ${shareCode ? `
+                        <div style="margin: 12px 0; padding: 12px; background: #141414; border-radius: 4px; border: 1px solid #2a2a2a;">
+                            <div style="color: #5a5a5a; font-size: 0.75rem; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Share Code</div>
+                            <div style="color: #d4af37; font-size: 0.85rem; font-family: 'Courier New', monospace; word-break: break-all;">${shareCode}</div>
+                            <button class="copy-btn" style="margin-top: 8px; padding: 6px 12px; font-size: 0.8rem;" onclick="event.stopPropagation(); copyShareCode('${shareCode}')">Copy</button>
+                        </div>
+                    ` : ''}
+                    <div class="deck-actions">
+                        <button class="primary-btn small-btn" onclick="event.stopPropagation(); viewFolder(${index})">Open Folder</button>
+                        <button class="secondary-btn small-btn" onclick="event.stopPropagation(); editFolder(${index})">Edit Folder</button>
+                        <button class="delete-btn small-btn" onclick="event.stopPropagation(); deleteFolder(${index})">Delete</button>
+                    </div>
+                </div>
+            `;
+            }).join('');
+        }
+
+        function deleteFolder(index) {
+            if (confirm('Are you sure you want to delete this folder and all its categories?')) {
+                const folderName = folders[index].name;
+                folders.splice(index, 1);
+                localStorage.setItem('alvoFolders', JSON.stringify(folders));
+                
+                if (folderCodes[folderName]) {
+                    delete folderCodes[folderName];
+                    localStorage.setItem('alvoFolderCodes', JSON.stringify(folderCodes));
+                }
+                
+                renderFolders();
+            }
+        }
+
+        function viewFolder(folderIndex) {
+            document.getElementById('my-folders-section').classList.remove('active');
+            document.getElementById('folder-view-section').classList.add('active');
+            
+            const folder = folders[folderIndex];
+            document.getElementById('folder-view-title').textContent = folder.name;
+            
+            const grid = document.getElementById('folder-decks-grid');
+            
+            if (folder.decks.length === 0) {
+                grid.innerHTML = '<div class="empty-state">No categories in this folder yet.</div>';
+                return;
+            }
+            
+            grid.innerHTML = folder.decks.map((deck, deckIndex) => `
+                <div class="deck-card">
+                    <div class="deck-title">${deck.title}</div>
+                    <div class="deck-count">${deck.cards.length} flashcards</div>
+                    <div class="deck-actions">
+                        <button class="primary-btn small-btn" onclick="startStudy(${folderIndex}, ${deckIndex})">Study</button>
+                        <button class="secondary-btn small-btn" onclick="startQuiz(${folderIndex}, ${deckIndex})">Quiz</button>
+                        <button class="secondary-btn small-btn" onclick="editCategory(${folderIndex}, ${deckIndex})">Edit</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function backToFolders() {
+            document.getElementById('folder-view-section').classList.remove('active');
+            document.getElementById('my-folders-section').classList.add('active');
+            renderFolders();
+        }
+
+        function backToFolderView() {
+            document.getElementById('study-section').classList.remove('active');
+            document.getElementById('quiz-section').classList.remove('active');
+            document.getElementById('folder-view-section').classList.add('active');
+        }
+
+        function startStudy(folderIndex, deckIndex) {
+            studyState.folderIndex = folderIndex;
+            studyState.deckIndex = deckIndex;
+            studyState.currentCard = 0;
+            studyState.flipped = false;
+            studyState.cards = [...folders[folderIndex].decks[deckIndex].cards];
+
+            document.getElementById('study-deck-title').textContent = folders[folderIndex].decks[deckIndex].title;
+            document.getElementById('study-section').classList.add('active');
+            document.getElementById('folder-view-section').classList.remove('active');
+
+            showStudyCard();
+        }
+
+        function showStudyCard() {
+            const card = studyState.cards[studyState.currentCard];
+            document.getElementById('card-front-text').textContent = card.term;
+            document.getElementById('card-back-text').textContent = card.definition;
+            document.getElementById('study-card').classList.remove('flipped');
+            studyState.flipped = false;
+
+            const progress = ((studyState.currentCard + 1) / studyState.cards.length) * 100;
+            document.getElementById('study-progress').style.width = progress + '%';
+        }
+
+        function flipCard() {
+            const card = document.getElementById('study-card');
+            card.classList.toggle('flipped');
+            studyState.flipped = !studyState.flipped;
+        }
+
+        function nextCard() {
+            if (studyState.currentCard < studyState.cards.length - 1) {
+                studyState.currentCard++;
+                showStudyCard();
+            } else {
+                alert('You have reached the end of the deck!');
+            }
+        }
+
+        function previousCard() {
+            if (studyState.currentCard > 0) {
+                studyState.currentCard--;
+                showStudyCard();
+            }
+        }
+
+        function shuffleCards() {
+            for (let i = studyState.cards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [studyState.cards[i], studyState.cards[j]] = [studyState.cards[j], studyState.cards[i]];
+            }
+            studyState.currentCard = 0;
+            showStudyCard();
+        }
+
+        function startQuiz(folderIndex, deckIndex) {
+            quizState.folderIndex = folderIndex;
+            quizState.deckIndex = deckIndex;
+            quizState.currentQuestion = 0;
+            quizState.score = 0;
+            quizState.answers = [];
+
+            const deck = folders[folderIndex].decks[deckIndex];
+            document.getElementById('quiz-deck-title').textContent = deck.title + ' - Quiz Mode';
+            document.getElementById('quiz-section').classList.add('active');
+            document.getElementById('folder-view-section').classList.remove('active');
+            document.getElementById('quiz-result').style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'block';
+
+            showQuizQuestion();
+        }
+
+        function showQuizQuestion() {
+            const deck = folders[quizState.folderIndex].decks[quizState.deckIndex];
+            const card = deck.cards[quizState.currentQuestion];
+
+            const allDefinitions = deck.cards.map(c => c.definition);
+            const incorrectAnswers = allDefinitions.filter(d => d !== card.definition);
+            
+            const shuffled = incorrectAnswers.sort(() => 0.5 - Math.random()).slice(0, 3);
+            shuffled.push(card.definition);
+            shuffled.sort(() => 0.5 - Math.random());
+
+            const progress = ((quizState.currentQuestion + 1) / deck.cards.length) * 100;
+            document.getElementById('quiz-progress').style.width = progress + '%';
+
+            document.getElementById('quiz-container').innerHTML = `
+                <div style="margin: 32px 0;">
+                    <h3 style="color: #8a8a8a; margin-bottom: 24px; font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">
+                        Question ${quizState.currentQuestion + 1} of ${deck.cards.length}
+                    </h3>
+                    <div style="color: #e8e8e8; font-size: 1.5rem; margin-bottom: 32px; font-weight: 400; line-height: 1.4;">
+                        ${card.term}
+                    </div>
+                    ${shuffled.map((option, index) => `
+                        <div class="quiz-option" onclick="checkAnswer('${option.replace(/'/g, "\\'")}', '${card.definition.replace(/'/g, "\\'")}', ${index})">
+                            ${option}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function checkAnswer(selected, correct, optionIndex) {
+            const isCorrect = selected === correct;
+            
+            if (isCorrect) {
+                quizState.score++;
+            }
+
+            const options = document.querySelectorAll('.quiz-option');
+            options[optionIndex].classList.add(isCorrect ? 'correct' : 'incorrect');
+
+            options.forEach(option => {
+                option.style.pointerEvents = 'none';
+                if (option.textContent.trim() === correct) {
+                    option.classList.add('correct');
+                }
+            });
+
+            setTimeout(() => {
+                quizState.currentQuestion++;
+                if (quizState.currentQuestion < folders[quizState.folderIndex].decks[quizState.deckIndex].cards.length) {
+                    showQuizQuestion();
+                } else {
+                    showQuizResult();
+                }
+            }, 1500);
+        }
+
+        function showQuizResult() {
+            const deck = folders[quizState.folderIndex].decks[quizState.deckIndex];
+            const percentage = Math.round((quizState.score / deck.cards.length) * 100);
+
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('quiz-result').style.display = 'block';
+            document.getElementById('final-score').innerHTML = `
+                <div style="font-size: 1.25rem; color: #8a8a8a; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px;">Final Score</div>
+                <div style="font-size: 3.5rem; font-weight: 300;">${quizState.score} / ${deck.cards.length}</div>
+                <div style="font-size: 1.5rem; color: #8a8a8a; margin-top: 16px;">${percentage}%</div>
+            `;
+        }
+
+        function retakeQuiz() {
+            startQuiz(quizState.folderIndex, quizState.deckIndex);
+        }
+
+        function editCategory(folderIndex, deckIndex) {
+            editState.folderIndex = folderIndex;
+            editState.deckIndex = deckIndex;
+            editState.deck = JSON.parse(JSON.stringify(folders[folderIndex].decks[deckIndex]));
+
+            document.getElementById('folder-view-section').classList.remove('active');
+            document.getElementById('edit-category-section').classList.add('active');
+
+            document.getElementById('edit-deck-title').value = editState.deck.title;
+            renderEditFlashcardList();
+        }
+
+        function renderEditFlashcardList() {
+            const list = document.getElementById('edit-flashcard-list');
+            
+            if (editState.deck.cards.length === 0) {
+                list.innerHTML = '<div class="empty-state">No flashcards in this category yet.</div>';
+                return;
+            }
+
+            list.innerHTML = `
+                <div style="border-top: 1px solid #2a2a2a; padding-top: 24px; margin-top: 24px;">
+                    <h3 style="margin-bottom: 16px; font-size: 1.25rem;">Existing Flashcards (${editState.deck.cards.length})</h3>
+                    ${editState.deck.cards.map((card, index) => `
+                        <div class="flashcard-item">
+                            <div class="flashcard-content">
+                                <div class="flashcard-term">${card.term}</div>
+                                <div class="flashcard-definition">${card.definition}</div>
+                            </div>
+                            <button class="delete-btn" onclick="deleteEditFlashcard(${index})">Delete</button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function addFlashcardToEdit() {
+            const term = document.getElementById('edit-card-term').value.trim();
+            const definition = document.getElementById('edit-card-definition').value.trim();
+
+            if (!term || !definition) {
+                alert('Please fill in both term and definition');
+                return;
+            }
+
+            editState.deck.cards.push({ term, definition });
+            document.getElementById('edit-card-term').value = '';
+            document.getElementById('edit-card-definition').value = '';
+            
+            renderEditFlashcardList();
+        }
+
+        function deleteEditFlashcard(index) {
+            editState.deck.cards.splice(index, 1);
+            renderEditFlashcardList();
+        }
+
+        function saveEditedCategory() {
+            const title = document.getElementById('edit-deck-title').value.trim();
+
+            if (!title) {
+                alert('Please enter a category name');
+                return;
+            }
+
+            if (editState.deck.cards.length === 0) {
+                alert('Category must have at least one flashcard');
+                return;
+            }
+
+            editState.deck.title = title;
+            folders[editState.folderIndex].decks[editState.deckIndex] = editState.deck;
+            localStorage.setItem('alvoFolders', JSON.stringify(folders));
+
+            const folderName = folders[editState.folderIndex].name;
+            const folderData = JSON.stringify(folders[editState.folderIndex]);
+            const encoded = LZString.compressToEncodedURIComponent(folderData);
+            folderCodes[folderName] = encoded;
+            localStorage.setItem('alvoFolderCodes', JSON.stringify(folderCodes));
+
+            alert('Category updated successfully!');
+            backToFolderViewFromEdit();
+        }
+
+        function backToFolderViewFromEdit() {
+            document.getElementById('edit-category-section').classList.remove('active');
+            document.getElementById('folder-view-section').classList.add('active');
+            viewFolder(editState.folderIndex);
+        }
+
+        function editFolder(folderIndex) {
+            editFolderState.folderIndex = folderIndex;
+            editFolderState.folder = JSON.parse(JSON.stringify(folders[folderIndex]));
+            editFolderState.newCategoryDeck = { title: '', cards: [] };
+
+            document.getElementById('my-folders-section').classList.remove('active');
+            document.getElementById('edit-folder-section').classList.add('active');
+
+            document.getElementById('edit-folder-name').value = editFolderState.folder.name;
+            renderEditFolderCategories();
+            renderEditFolderNewCategoryCards();
+        }
+
+        function renderEditFolderCategories() {
+            const container = document.getElementById('edit-folder-categories-list');
+            
+            if (editFolderState.folder.decks.length === 0) {
+                container.innerHTML = '<div class="empty-state">No categories in this folder yet.</div>';
+                return;
+            }
+
+            container.innerHTML = `
+                <div style="border-top: 1px solid #2a2a2a; padding-top: 24px;">
+                    <h3 style="margin-bottom: 16px; font-size: 1.25rem;">Existing Categories (${editFolderState.folder.decks.length})</h3>
+                    ${editFolderState.folder.decks.map((deck, index) => `
+                        <div class="flashcard-item">
+                            <div class="flashcard-content">
+                                <div class="flashcard-term">${deck.title}</div>
+                                <div class="flashcard-definition">${deck.cards.length} flashcards</div>
+                            </div>
+                            <button class="delete-btn" onclick="deleteEditFolderCategory(${index})">Delete</button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function deleteEditFolderCategory(index) {
+            if (confirm('Are you sure you want to delete this category and all its flashcards?')) {
+                editFolderState.folder.decks.splice(index, 1);
+                renderEditFolderCategories();
+            }
+        }
+
+        function addFlashcardToNewCategory() {
+            const term = document.getElementById('edit-folder-card-term').value.trim();
+            const definition = document.getElementById('edit-folder-card-definition').value.trim();
+
+            if (!term || !definition) {
+                alert('Please fill in both term and definition');
+                return;
+            }
+
+            editFolderState.newCategoryDeck.cards.push({ term, definition });
+            document.getElementById('edit-folder-card-term').value = '';
+            document.getElementById('edit-folder-card-definition').value = '';
+            
+            renderEditFolderNewCategoryCards();
+        }
+
+        function renderEditFolderNewCategoryCards() {
+            const container = document.getElementById('edit-folder-new-category-cards');
+            
+            if (editFolderState.newCategoryDeck.cards.length === 0) {
+                container.innerHTML = '<div class="empty-state">No flashcards added to new category yet.</div>';
+                return;
+            }
+
+            container.innerHTML = editFolderState.newCategoryDeck.cards.map((card, index) => `
+                <div class="flashcard-item">
+                    <div class="flashcard-content">
+                        <div class="flashcard-term">${card.term}</div>
+                        <div class="flashcard-definition">${card.definition}</div>
+                    </div>
+                    <button class="delete-btn" onclick="deleteNewCategoryFlashcard(${index})">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        function deleteNewCategoryFlashcard(index) {
+            editFolderState.newCategoryDeck.cards.splice(index, 1);
+            renderEditFolderNewCategoryCards();
+        }
+
+        function saveNewCategoryToEditFolder() {
+            const title = document.getElementById('edit-folder-deck-title').value.trim();
+
+            if (!title) {
+                alert('Please enter a category name');
+                return;
+            }
+
+            if (editFolderState.newCategoryDeck.cards.length === 0) {
+                alert('Please add at least one flashcard to this category');
+                return;
+            }
+
+            editFolderState.newCategoryDeck.title = title;
+            editFolderState.folder.decks.push({ ...editFolderState.newCategoryDeck });
+            
+            editFolderState.newCategoryDeck = { title: '', cards: [] };
+            document.getElementById('edit-folder-deck-title').value = '';
+            renderEditFolderCategories();
+            renderEditFolderNewCategoryCards();
+            
+            alert('Category added to folder!');
+        }
+
+        function saveEditedFolder() {
+            const folderName = document.getElementById('edit-folder-name').value.trim();
+
+            if (!folderName) {
+                alert('Please enter a folder name');
+                return;
+            }
+
+            if (editFolderState.folder.decks.length === 0) {
+                alert('Folder must have at least one category');
+                return;
+            }
+
+            editFolderState.folder.name = folderName;
+            
+            const oldFolderName = folders[editFolderState.folderIndex].name;
+            folders[editFolderState.folderIndex] = editFolderState.folder;
+            localStorage.setItem('alvoFolders', JSON.stringify(folders));
+
+            if (oldFolderName !== folderName && folderCodes[oldFolderName]) {
+                delete folderCodes[oldFolderName];
+            }
+
+            const folderData = JSON.stringify(editFolderState.folder);
+            const encoded = LZString.compressToEncodedURIComponent(folderData);
+            folderCodes[folderName] = encoded;
+            localStorage.setItem('alvoFolderCodes', JSON.stringify(folderCodes));
+
+            alert('Folder updated successfully!');
+            backToFoldersFromEditFolder();
+        }
+
+        function backToFoldersFromEditFolder() {
+            document.getElementById('edit-folder-section').classList.remove('active');
+            document.getElementById('my-folders-section').classList.add('active');
+            renderFolders();
+        }
+    </script>
+</body>
+</html>
